@@ -31,4 +31,4 @@ jobs:
         run: docker rm -f backend_aws_hosting
 
       - name: Run Docker container
-        run: docker run -d -p 5000:5000 --name backend_aws_hosting chirag4780/backend_aws_hosting:latest
+        run: docker run -d -p 4000:4000 --name backend_aws_hosting chirag4780/backend_aws_hosting:latest
