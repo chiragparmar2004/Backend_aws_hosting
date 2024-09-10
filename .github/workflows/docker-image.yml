@@ -6,24 +6,29 @@ on:
 
 jobs:
   build:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-      - name: Login to docker hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} 
-      - name: Build docker image
-        run: docker build -t chirag4780/Backend_aws_hosting.
-      - name: Publish image to docker hub
-        run: docker push chirag4780/Backend_aws_hosting:latest
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t chirag4780/backend_aws_hosting .
+
+      - name: Publish image to Docker Hub
+        run: docker push chirag4780/backend_aws_hosting:latest
         
   deploy:
     needs: build
-    runs-on: [aws-ec2]
+    runs-on: ubuntu-latest
     steps:
-      - name: Pull image from docker hub
-        run: docker pull chirag4780/Backend_aws_hosting:latest
+      - name: Pull image from Docker Hub
+        run: docker pull chirag4780/backend_aws_hosting:latest
+
       - name: Delete old container
-        run: docker rm -f Backend_aws_hosting
-      - name: Run docker container
-        run: docker run -d -p 5000:5000 --name Backend_aws_hosting chirag4780/Backend_aws_hosting
+        run: docker rm -f backend_aws_hosting || true
+
+      - name: Run Docker container
+        run: docker run -d -p 5000:5000 --name backend_aws_hosting chirag4780/backend_aws_hosting:latest
