@@ -22,7 +22,7 @@ jobs:
         
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: [backend-ec2]
     steps:
       - name: Pull image from Docker Hub
         run: docker pull chirag4780/backend_aws_hosting:latest
