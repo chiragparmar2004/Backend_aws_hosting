@@ -13,17 +13,17 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} 
       - name: Build docker image
-        run: docker build -t chirag4780/aws-learning .
+        run: docker build -t chirag4780/Backend_aws_hosting.
       - name: Publish image to docker hub
-        run: docker push chirag4780/aws-learning:latest
+        run: docker push chirag4780/Backend_aws_hosting:latest
         
   deploy:
     needs: build
     runs-on: [aws-ec2]
     steps:
       - name: Pull image from docker hub
-        run: docker pull chirag4780/aws-learning:latest
+        run: docker pull chirag4780/Backend_aws_hosting:latest
       - name: Delete old container
-        run: docker rm -f aws-learning
+        run: docker rm -f Backend_aws_hosting
       - name: Run docker container
-        run: docker run -d -p 5000:5000 --name aws-learning chirag4780/aws-learning
+        run: docker run -d -p 5000:5000 --name Backend_aws_hosting chirag4780/Backend_aws_hosting
