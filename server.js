@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/v1/checkingServer", (req, res) => {
-  res.send("Successfully Connected to Backend Server");
+  res.send("Successfully Connected to Backend Server 2");
 });
 
 app.listen(PORT, () => {
